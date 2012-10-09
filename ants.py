@@ -1,7 +1,7 @@
 """
 The ants module implements game logic for Ants Vs. SomeBees.
-Name: Mari Batilando; cs61a-aed
-Name: Andy Cheng; cs61a-aeu
+Name: Mari Batilando; cs61a-aed; Part A
+Name: Andy Cheng; cs61a-aeu; Part B
 TA: Julia Oh
 Section: 111
 """
@@ -32,11 +32,7 @@ class Place(object):
         self.ant = None       # An Ant
         self.entrance = None  # A Place
         # Phase 1: Add an entrance to the exit
-<<<<<<< HEAD
-        if self.exit:
-=======
         if exit != None:
->>>>>>> Done all my parts just need to do problem 9
             self.exit.entrance = self
 
     def add_insect(self, insect):
@@ -69,7 +65,6 @@ class Place(object):
             assert self.ant == insect, '{0} is not in {1}'.format(insect, self)
             "*** YOUR CODE HERE ***"
             self.ant = None
-
         insect.place = None
 
     def __str__(self):
@@ -78,12 +73,12 @@ class Place(object):
 
 class Insect(object):
     """An Insect, the base class of Ant and Bee, has armor and a Place."""
-
+    self.watersafe = False
+    
     def __init__(self, armor, place=None):
         """Create an Insect with an armor amount and a starting Place."""
         self.armor = armor
         self.place = place  # set by Place.add_insect and Place.remove_insect
-        self.watersafe = False
 
     def reduce_armor(self, amount):
         """Reduce armor by amount, and remove the insect from its place if it
@@ -132,7 +127,7 @@ class Bee(Insect):
     def blocked(self):
         """Return True if this Bee cannot advance to the next Place."""
         # Phase 2: Special handling for NinjaAnt
-        if self.place.ant != None and self.place.ant.blocks_path == False:
+        if self.place.ant.blocks_path == False:
             return False
         return self.place.ant is not None
 
@@ -152,7 +147,7 @@ class Bee(Insect):
 class Ant(Insect):
     """An Ant occupies a place and does work for the colony."""
 
-    implemented = True  # Only implemented Ant classes should be instantiated
+    implemented = False  # Only implemented Ant classes should be instantiated
     damage = 0
     food_cost = 0
     blocks_path = True
@@ -469,16 +464,12 @@ class FireAnt(Ant):
     name = 'Fire'
     damage = 3
     food_cost = 4
-<<<<<<< HEAD
-    implemented = False
-=======
     implemented = True
->>>>>>> Done all my parts just need to do problem 9
 
     def reduce_armor(self, amount):
         if amount >= self.armor:
             for bee in self.place.bees:
-                bee.reduce_armor(3)
+                bee.reduce_armor(FireAnt.damage)
         Insect.reduce_armor(self, amount)
             
 
@@ -555,7 +546,7 @@ class BodyguardAnt(Ant):
     """BodyguardAnt provides protection to other Ants."""
     name = 'Bodyguard'
     ant = None
-    implemented = False
+    implemented = True
     container = True
 
     def __init__(self):
